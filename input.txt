@@ -1,0 +1,11 @@
+Model                = holstein
+Method               = mash
+
+System               = slurm # slurm/pc
+Cpus                 = 1
+
+# variables that start with $ override the defaults in the model file
+
+$dtN               = 0.01
+$NTraj             = 1
+$NSteps            = 100
