@@ -1,6 +1,7 @@
 # mqc-specfunc
 
 This code is based on https://github.com/mandalgrouptamu/SemiClassical-NAMD/
+
 The submit.sh file is modified to submit jobs to SLURM with the assumption of a Python conda environment called pyenv. The user can fix the directories where output files are returned in submit.sh
 Run by doing the following steps:
 - check file in the Model folder to fix the approriate parameters
@@ -11,3 +12,7 @@ Run by doing the following steps:
 python run.py input.txt {name of the output folder}
 
 The "holstein" model can be run with the "mfe" and "mash" methods. The "lif" model can only be run with "mfe_kspace" method. The "mfe" and "mash" methods return amplitudes of the wavefunction every nuclear timestep while "mfe_kspace" method return the correlation function C_k(t) every electronic timestep.
+
+Run the command
+python avg.py {folder with files of different trajectories}
+to return the averaged results.
