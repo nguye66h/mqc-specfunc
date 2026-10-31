@@ -1,4 +1,5 @@
-import os,sys
+import os, sys
+import shlex
 
 def getInput(input,key):
     try:
@@ -27,11 +28,10 @@ except:
 # System
 system = getInput(input,"System")
 
-os.system(f"rm -rf $SCRATCH/NAMD/{fold}")
-os.system(f"mkdir -p $SCRATCH/NAMD/{fold}")
-
 # SLURM
 if system == "slurm" or system == "htcondor":
+    os.system(f"rm -rf $SCRATCH/NAMD/{fold}")
+    os.system(f"mkdir -p $SCRATCH/NAMD/{fold}")
     #sys.path.append(os.popen("pwd").read().replace("\n","")+"/"+fold)
     print (f"Running jobs in a {system}")
     model = getInput(input,"Model")
@@ -64,4 +64,12 @@ if system == "slurm" or system == "htcondor":
 # PC
 else:
     print ("Running jobs in your local machine (like a PC)")
-    os.system(f"python3 serial.py {inputfile} {fold}")
+    command = " ".join([
+        shlex.quote(sys.executable),
+        "serial.py",
+        shlex.quote(inputfile),
+        shlex.quote(fold),
+    ])
+    status = os.system(command)
+    if status != 0:
+        raise SystemExit(os.waitstatus_to_exitcode(status))

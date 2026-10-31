@@ -3,21 +3,36 @@ import numpy as np
 
 try:
     fold = sys.argv[2]
-except:
+except IndexError:
     fold = "./output"
 
 #-------------------------
-try:
-    # Get the current working directory
-    current_directory = os.getcwd()
+# Cluster jobs copy the input into `fold` and pass that file name.
+# A local run passes a path in the working directory. Keep the copied
+# file first so an existing SLURM job still reads the copy it shipped.
+print("Current Directory:", os.getcwd())
 
-    # Print the current working directory
-    print("Current Directory:", current_directory)
-    inputtxt = open(f"{fold}/{sys.argv[1]}", 'r').readlines()
-    print(f"Reading {sys.argv[1]}")
-except:
-    print("Reading input.txt")
-    inputtxt = open('input.txt', 'r').readlines()
+def read_input_lines(argv, fold):
+    candidates = []
+    if len(argv) > 1 and argv[1]:
+        candidates.append(os.path.join(fold, argv[1]))
+        candidates.append(argv[1])
+    candidates.append("input.txt")
+    tried = []
+    for path in candidates:
+        if path in tried:
+            continue
+        tried.append(path)
+        if os.path.isfile(path):
+            print(f"Reading {path}")
+            with open(path, "r") as handle:
+                return handle.readlines()
+    raise FileNotFoundError(
+        "No input file found. Pass a path to serial.py or place input.txt "
+        "in the working directory. Looked for: " + ", ".join(tried)
+    )
+
+inputtxt = read_input_lines(sys.argv, fold)
 
 
 def getInput(input,key):
