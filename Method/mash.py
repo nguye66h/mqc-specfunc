@@ -18,7 +18,7 @@ def initElectronic(NStates, initState, mo, mk, Hij):
     alpha = (NStates - 1)/(sumN - 1)
     beta = (alpha - 1)/NStates
 
-    c = np.sqrt(beta/alpha) * np.ones((NStates), dtype = np.complex_)
+    c = np.sqrt(beta/alpha) * np.ones((NStates), dtype = np.complex128)
     c[initState] = np.sqrt((1+beta)/alpha)
     uni = np.random.random(NStates)
     c = c * np.exp(1j*2*np.pi*uni)

@@ -4,8 +4,11 @@ Method               = mash
 System               = slurm # slurm/pc
 Cpus                 = 1
 
-# variables that start with $ override the defaults in the model file
+# $ names below are read by the propagator. Site count, J, g, w, and T live in Model/holstein.py.
 
 $dtN               = 0.01
 $NTraj             = 1
 $NSteps            = 100
+
+# Local run, without SLURM: python examples/run_holstein_local.py
+# This file remains the cluster-oriented default. See README.md.

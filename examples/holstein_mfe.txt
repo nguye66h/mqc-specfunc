@@ -1,0 +1,13 @@
+Model                = holstein
+Method               = mfe
+System               = pc
+
+# One trajectory on the default 10-site chain in Model/holstein.py.
+# Edit that file to change the site count, hopping, coupling, frequency,
+# or temperature. Lines below update quantities the propagator reads.
+$dtN                 = 0.05
+$dtE                 = 0.01
+$NTraj               = 1
+$NSteps              = 20
+$nskip               = 1
+$SEED                = 1
